@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "start": "npx parcel ./index.html --no-autoinstall"
+  },
+  "dependencies": {
+    "excalibur": "^0.29.1",
+    "typescript": "^5.4.4"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.5"
+  }
+}

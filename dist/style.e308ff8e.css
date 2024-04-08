@@ -11,6 +11,102 @@ body {
   height: 100vh;
 }
 
+.info {
+  position: absolute;
+  background-color: #ead8c0;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  border: double #a79277 0.5em;
+  bottom: 20em;
+}
+
+.show-info {
+  animation: showInfo 1s forwards;
+}
+
+.hide-info {
+  animation: hideInfo 0.5s forwards;
+}
+
+.info > div {
+  font-weight: bold;
+  font-family: "Pixelify Sans", sans-serif;
+  font-size: 1.5rem;
+}
+
+.info > p {
+  font-family: "Pixelify Sans", sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+@keyframes showInfo {
+  0% {
+    bottom: -10em;
+  }
+
+  60% {
+    bottom: 22em;
+  }
+
+  100% {
+    bottom: 20em;
+  }
+}
+
+@keyframes hideInfo {
+  0% {
+    bottom: 20em;
+  }
+
+  50% {
+    bottom: 22em;
+    opacity: 0.8;
+  }
+
+  100% {
+    bottom: -20em;
+    opacity: 0;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-info {
+  background: none;
+  border: none;
+  font-family: "Pixelify Sans", sans-serif;
+  font-size: 1em;
+  cursor: pointer;
+  transition: transform ease-in-out 100ms;
+  visibility: visible;
+  animation: blink 1.25s infinite;
+}
+
+.close-info:hover {
+  transform: scale(1.2);
+  animation: none;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
 
 
 /*# sourceMappingURL=/style.e308ff8e.css.map */

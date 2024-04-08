@@ -33304,15 +33304,89 @@ var createGame = exports.createGame = function createGame() {
   var game = new Game();
   return game;
 };
-},{"excalibur":"node_modules/excalibur/build/esm/excalibur.js"}],"src/index.ts":[function(require,module,exports) {
+},{"excalibur":"node_modules/excalibur/build/esm/excalibur.js"}],"src/info.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.showInfo = void 0;
+var showInfo = exports.showInfo = function showInfo(info) {
+  // Maybe we need to delete any info already exists?
+  var infoDiv = document.createElement("div");
+  infoDiv.classList.add("info");
+  infoDiv.classList.add("show-info");
+  // Holds the heading and close button
+  var infoHeader = document.createElement("div");
+  infoHeader.classList.add("info-header");
+  var closeButton = createCloseButton(infoDiv);
+  // Holds the heading
+  var infoHeadingDiv = document.createElement("div");
+  // Holds the content
+  var infoContentP = document.createElement("p");
+  // Apply animation to related elements
+  appearByAnimation(info.heading, infoHeadingDiv, 50);
+  appearByAnimation(info.content, infoContentP, 10);
+  // Add heading and button to header
+  infoHeader.appendChild(infoHeadingDiv);
+  infoHeader.appendChild(closeButton);
+  // Add header and content to info container
+  infoDiv.appendChild(infoHeader);
+  infoDiv.appendChild(infoContentP);
+  document.body.append(infoDiv);
+};
+// A function to show text letter by letter
+var appearByAnimation = function appearByAnimation(text, container, speed) {
+  // Create spans that contains letters
+  Array.from(text).forEach(function (ch) {
+    var span = document.createElement("span");
+    span.innerText = ch;
+    span.classList.add("hidden");
+    // Info content span does not do anything useful
+    // Apart from preventing confusion with any other spans
+    span.classList.add("info-content-span");
+    container.appendChild(span);
+  });
+  var spans = container.querySelectorAll("span.info-content-span.hidden");
+  var i = 0;
+  // Remove hidden class from span by time
+  var interval = setInterval(function () {
+    if (i < spans.length) {
+      spans[i].classList.remove("hidden");
+      i += 1;
+    } else {
+      clearInterval(interval);
+    }
+  }, speed);
+};
+var createCloseButton = function createCloseButton(infoDiv) {
+  var closeButton = document.createElement("button");
+  closeButton.classList.add("close-info");
+  closeButton.innerText = "✕";
+  closeButton.addEventListener("click", function () {
+    infoDiv.classList.remove("show-info");
+    infoDiv.classList.add("hide-info");
+    // We might remove div element from the DOM
+  });
+  return closeButton;
+};
+},{}],"src/index.ts":[function(require,module,exports) {
 "use strict";
 
 var _hero = require("./hero");
 var _game = require("./game");
+var _info = require("./info");
 var game = (0, _game.createGame)();
 var hero = (0, _hero.createHero)(game);
+setTimeout(function () {
+  var info = {
+    heading: "LEVEL 1: What is an Algorithm?",
+    content: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet culpa,\n            eaque reprehenderit, aperiam maxime sapiente in officiis beatae adipisci\n            tempora repudiandae incidunt earum recusandae assumenda fugiat! Corporis\n            hic corrupti non minima ut eveniet sunt nemo odit, possimus, et\n            assumenda atque?"
+  };
+  (0, _info.showInfo)(info);
+}, 2000);
 game.start();
-},{"./hero":"src/hero.ts","./game":"src/game.ts"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./hero":"src/hero.ts","./game":"src/game.ts","./info":"src/info.ts"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -33337,7 +33411,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33685" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41157" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

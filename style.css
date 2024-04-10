@@ -1,3 +1,9 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
 html,
 body {
   margin: 0;
@@ -106,4 +112,35 @@ body {
   100% {
     opacity: 1;
   }
+}
+
+/* Code Editor */
+
+.editor-container {
+  width: 50%;
+  height: 300px;
+  background-color: #ead8c0;
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
+  display: flex;
+  padding: 1em;
+  border: double #a79277 0.5em;
+  gap: 0 1em;
+}
+
+.editor-text-container {
+  width: 100%;
+  height: 100%;
+  resize: none;
+  background-color: #a792775a;
+  border: 1px solid #a79277;
+  outline: none;
+  line-height: 1;
+  font-size: 16px;
+}
+
+.editor-text {
+  border: none;
+  outline: none;
 }

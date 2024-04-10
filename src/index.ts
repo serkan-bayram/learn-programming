@@ -1,10 +1,13 @@
 import { createHero } from "./hero";
 import { createGame } from "./game";
 import { showInfo } from "./info";
+import { initPlayground } from "./playground";
 
 const game = createGame();
 
 const hero = createHero(game);
+
+initPlayground();
 
 setTimeout(() => {
   const info = {
@@ -16,7 +19,7 @@ setTimeout(() => {
             assumenda atque?`,
   };
 
-  showInfo(info);
+  // showInfo(info);
 }, 2000);
 
 game.start();

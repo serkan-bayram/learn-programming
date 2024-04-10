@@ -33304,89 +33304,77 @@ var createGame = exports.createGame = function createGame() {
   var game = new Game();
   return game;
 };
-},{"excalibur":"node_modules/excalibur/build/esm/excalibur.js"}],"src/info.ts":[function(require,module,exports) {
+},{"excalibur":"node_modules/excalibur/build/esm/excalibur.js"}],"src/playground.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.showInfo = void 0;
-var showInfo = exports.showInfo = function showInfo(info) {
-  // Maybe we need to delete any info already exists?
-  var infoDiv = document.createElement("div");
-  infoDiv.classList.add("info");
-  infoDiv.classList.add("show-info");
-  // Holds the heading and close button
-  var infoHeader = document.createElement("div");
-  infoHeader.classList.add("info-header");
-  var closeButton = createCloseButton(infoDiv);
-  // Holds the heading
-  var infoHeadingDiv = document.createElement("div");
-  // Holds the content
-  var infoContentP = document.createElement("p");
-  // Apply animation to related elements
-  appearByAnimation(info.heading, infoHeadingDiv, 50);
-  appearByAnimation(info.content, infoContentP, 10);
-  // Add heading and button to header
-  infoHeader.appendChild(infoHeadingDiv);
-  infoHeader.appendChild(closeButton);
-  // Add header and content to info container
-  infoDiv.appendChild(infoHeader);
-  infoDiv.appendChild(infoContentP);
-  document.body.append(infoDiv);
+exports.initPlayground = void 0;
+// Create a new line when Enter is pressed on editorContainer
+var handleEnter = function handleEnter(e, editorContainer) {
+  e.preventDefault();
+  var newLineDiv = createNewLineDiv(editorContainer);
+  newLineDiv.focus();
 };
-// A function to show text letter by letter
-var appearByAnimation = function appearByAnimation(text, container, speed) {
-  // Create spans that contains letters
-  Array.from(text).forEach(function (ch) {
-    var span = document.createElement("span");
-    span.innerText = ch;
-    span.classList.add("hidden");
-    // Info content span does not do anything useful
-    // Apart from preventing confusion with any other spans
-    span.classList.add("info-content-span");
-    container.appendChild(span);
-  });
-  var spans = container.querySelectorAll("span.info-content-span.hidden");
-  var i = 0;
-  // Remove hidden class from span by time
-  var interval = setInterval(function () {
-    if (i < spans.length) {
-      spans[i].classList.remove("hidden");
-      i += 1;
-    } else {
-      clearInterval(interval);
+// Delete new line if there is no text left on that line
+// TODO: focus the before line & rearrange line numbers
+var handleBackspace = function handleBackspace(newLineDiv) {
+  newLineDiv.addEventListener("keydown", function (e) {
+    if (e.key === "Backspace") {
+      var target = e.target;
+      if (target.innerText.length <= 0) {
+        target.remove();
+      }
     }
-  }, speed);
-};
-var createCloseButton = function createCloseButton(infoDiv) {
-  var closeButton = document.createElement("button");
-  closeButton.classList.add("close-info");
-  closeButton.innerText = "✕";
-  closeButton.addEventListener("click", function () {
-    infoDiv.classList.remove("show-info");
-    infoDiv.classList.add("hide-info");
-    // We might remove div element from the DOM
   });
-  return closeButton;
+};
+var getAllLines = function getAllLines() {
+  return document.querySelectorAll(".editor-text");
+};
+// Create new line and attach needed events
+var createNewLineDiv = function createNewLineDiv(editorContainer) {
+  var newLineDiv = document.createElement("div");
+  // Attach backspace event
+  handleBackspace(newLineDiv);
+  // Set the data-line-number according to line count of editor
+  var lines = getAllLines().length;
+  newLineDiv.dataset.lineNumber = String(lines + 1);
+  newLineDiv.classList.add("editor-text");
+  newLineDiv.contentEditable = "true";
+  editorContainer.appendChild(newLineDiv);
+  return newLineDiv;
+};
+var initPlayground = exports.initPlayground = function initPlayground() {
+  // Container of contenteditable divs
+  var editorContainer = document.querySelector(".editor-text-container");
+  if (editorContainer) {
+    createNewLineDiv(editorContainer);
+    editorContainer.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        handleEnter(e, editorContainer);
+      }
+    });
+  }
 };
 },{}],"src/index.ts":[function(require,module,exports) {
 "use strict";
 
 var _hero = require("./hero");
 var _game = require("./game");
-var _info = require("./info");
+var _playground = require("./playground");
 var game = (0, _game.createGame)();
 var hero = (0, _hero.createHero)(game);
+(0, _playground.initPlayground)();
 setTimeout(function () {
   var info = {
     heading: "LEVEL 1: What is an Algorithm?",
     content: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet culpa,\n            eaque reprehenderit, aperiam maxime sapiente in officiis beatae adipisci\n            tempora repudiandae incidunt earum recusandae assumenda fugiat! Corporis\n            hic corrupti non minima ut eveniet sunt nemo odit, possimus, et\n            assumenda atque?"
   };
-  (0, _info.showInfo)(info);
+  // showInfo(info);
 }, 2000);
 game.start();
-},{"./hero":"src/hero.ts","./game":"src/game.ts","./info":"src/info.ts"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./hero":"src/hero.ts","./game":"src/game.ts","./playground":"src/playground.ts"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -33411,7 +33399,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41157" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39131" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

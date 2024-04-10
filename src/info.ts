@@ -22,7 +22,7 @@ export const showInfo = (info: Info) => {
 
   // Apply animation to related elements
   appearByAnimation(info.heading, infoHeadingDiv, 50);
-  appearByAnimation(info.content, infoContentP, 10);
+  appearByAnimation(info.content, infoContentP, 5);
 
   // Add heading and button to header
   infoHeader.appendChild(infoHeadingDiv);
